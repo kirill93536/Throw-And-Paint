@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class PainterProjectileScript : MonoBehaviour
 {
-    [HideInInspector] Renderer renderer;
+    [HideInInspector] new Renderer renderer;
 
     [HideInInspector] public Color color;
-    private Vector3 mouseScreenPosition;
-    private Vector3 mouseWorldPosition;
-    public float speed = 5f;
+    public float speed = 3.3f;
     private bool isHolding = true;
     private bool isAlreadyShot = false;
 
-    float hue;
-    float sat;
-    float val;
+    private float hue;
+    private float sat;
+    private float val;
 
     LineRenderer lineRenderer;
     Color lineColor;
     private void Start()
     {
         renderer = gameObject.GetComponent<Renderer>();
-        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer = GetComponentInChildren<LineRenderer>();
         Color.RGBToHSV(renderer.material.color, out hue, out sat, out val);
         sat -= 0.5f;
         lineColor = Color.HSVToRGB(hue, sat, val);
@@ -39,7 +37,6 @@ public class PainterProjectileScript : MonoBehaviour
                 {
                     lineRenderer.startColor = lineColor;
                     lineRenderer.endColor = lineColor;
-                    Debug.Log(mouseWorldPosition);
                     transform.position = MousePos(touch);
                 }
             }
@@ -48,13 +45,15 @@ public class PainterProjectileScript : MonoBehaviour
                 isHolding = false;
                 if (!isAlreadyShot)
                 {
-                    Throw();
+                    ThrowPainter();
                 }
             }
         }
+
+
     }
 
-    private void Throw()
+    private void ThrowPainter()
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = false;
