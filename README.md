@@ -1,1 +1,1 @@
-# throw_and_paint
+# Throw And Paint
