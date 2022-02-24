@@ -24,6 +24,9 @@ public class PainterProjectileScript : MonoBehaviour
         Color.RGBToHSV(renderer.material.color, out hue, out sat, out val);
         sat -= 0.5f;
         lineColor = Color.HSVToRGB(hue, sat, val);
+        lineRenderer.startColor = renderer.material.color;
+        lineRenderer.endColor = renderer.material.color;
+        lineRenderer.material.color = renderer.material.color;
     }
 
     private void Update()

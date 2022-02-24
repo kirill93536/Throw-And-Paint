@@ -14,6 +14,7 @@ public class DrawTrajectory : MonoBehaviour
         lineRenderer = GetComponentInChildren<LineRenderer>();
         lineRenderer.startColor = Color.gray;
         lineRenderer.endColor = Color.gray;
+        lineRenderer.material.color = Color.gray;
     }
 
     void Update()
