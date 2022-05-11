@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
 {
+    private Vector3 mouseScreenPosition;
+    private Vector3 mouseWorldPosition;
     public float speed = 5f;
     private bool isHolding = false;
     private bool isAlreadyShot = false;
-    private Vector3 scale;
+    private bool isAttached = false;
+    //Transform scale;
+    Vector3 center = Vector3.zero;
 
-    private void Awake()
-    {
-        scale = gameObject.transform.localScale;
-    }
+    [SerializeField]
+    float radius = 2f, angularSpeed = 2f;
+
+    float positionX, positionY, angle = 0f;
+
 
     private void Start()
     {
@@ -28,6 +33,7 @@ public class ProjectileScript : MonoBehaviour
             {
                 if (isHolding)
                 {
+                    Debug.Log(mouseWorldPosition);
                     transform.position = MousePos(touch);
                 }
             }
@@ -53,17 +59,20 @@ public class ProjectileScript : MonoBehaviour
 
     private Vector3 MousePos(Touch touch)
     {
-        Vector3 mouseScreenPosition = Input.mousePosition;
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, Camera.main.nearClipPlane + 1));
+        mouseScreenPosition = Input.mousePosition;
+        mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, Camera.main.nearClipPlane + 1));
 
         return mouseWorldPosition;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        isAttached = true;
+        
+        
         GetComponent<Rigidbody>().isKinematic = true;
         gameObject.transform.parent = GameObject.Find("GamePlane").transform;
-        transform.localScale = scale;
+        transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }
 
     private void OnBecameInvisible()

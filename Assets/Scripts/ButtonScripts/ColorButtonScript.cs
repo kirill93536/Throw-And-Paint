@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public enum ColorType
 {
@@ -12,18 +15,29 @@ public class ColorButtonScript : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public ColorType colorType;
     public GameObject painter;
     private GameObject instance;
+    private Button btn;
+    private bool isHolding;
+    private bool hasThrown = true;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
     public void SetProjectile()
     {
-        Vector3 mouseScreenPosition = Input.mousePosition;
-        Vector3 point = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, Camera.main.nearClipPlane + 1));
+
+        Debug.Log("Color Button Pressed");
+        Vector3 point = MousePosition.GetMousePosition(Camera.main, FindObjectOfType<Throw>().transform);
         instance = Instantiate(painter, point, transform.rotation) as GameObject;
         instance.transform.rotation = Quaternion.Euler(-90, 0, 0);
         Renderer textureRenderer = instance.GetComponent<Renderer>();
+        //Debug.Log("Color is:");
         switch (colorType)
         {
             case ColorType.black:
                 textureRenderer.material.color = Color.black;
+                //Debug.Log("Black");
                 break;
             case ColorType.cyan:
                 textureRenderer.material.color = Color.cyan;
@@ -45,15 +59,17 @@ public class ColorButtonScript : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         Invoke("SetProjectile", 0);
+        //throw new System.NotImplementedException();
     }
-
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        //throw new System.NotImplementedException();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        
+       //throw new System.NotImplementedException();
     }
+
+    
 }

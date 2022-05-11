@@ -1,5 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class DrawTrajectory : MonoBehaviour
 {
@@ -9,14 +14,17 @@ public class DrawTrajectory : MonoBehaviour
     public LineRenderer lineRenderer;
     public int vertexCount = 12;
     private bool isHolding = true;
+
+
+    // Use this for initialization
     void Start()
     {
-        lineRenderer = GetComponentInChildren<LineRenderer>();
+        lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.startColor = Color.gray;
         lineRenderer.endColor = Color.gray;
-        lineRenderer.material.color = Color.gray;
     }
 
+    // Update is called once per frame
     void Update()
     {
         if(Input.touchCount > 0)
